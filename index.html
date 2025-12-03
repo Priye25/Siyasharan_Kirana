@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Siyasharan Kirana Store - Nivi Rajasingh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+/* HEADER */
+.header {
+    background: #2874f0;
+    padding: 12px 20px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.header .logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+.search-box {
+    flex: 1;
+}
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    font-size: 16px;
+}
+.cart-btn {
+    background: #fff;
+    color: #2874f0;
+    padding: 8px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* CATEGORY BAR */
+.categories {
+    background: #fff;
+    display: flex;
+    padding: 14px;
+    overflow-x: auto;
+    border-bottom: 1px solid #ddd;
+}
+.category {
+    margin-right: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+.category img {
+    width: 60px;
+    height: 60px;
+}
+.category p {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* PRODUCT GRID */
+.products {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+}
+.product-card {
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    transition: .3s;
+}
+.product-card:hover {
+    transform: scale(1.05);
+}
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+.product-card h4 {
+    font-size: 16px;
+    margin-top: 8px;
+}
+.product-card p {
+    font-size: 14px;
+    margin-top: 4px;
+    color: green;
+    font-weight: bold;
+}
+.add-btn {
+    margin-top: 10px;
+    background: #ff9f00;
+    padding: 8px;
+    width: 100%;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #2874f0;
+    color: white;
+    margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">Siyasharan Kirana Store</div>
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Search for products...">
+    </div>
+    <div class="cart-btn">Cart 🛒</div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="categories">
+    <div class="category"><img src="https://i.imgur.com/gHEpYtp.png"><p>Atta</p></div>
+    <div class="category"><img src="https://i.imgur.com/hzF7bPZ.png"><p>Rice</p></div>
+    <div class="category"><img src="https://i.imgur.com/DQOMQGg.png"><p>Oil</p></div>
+    <div class="category"><img src="https://i.imgur.com/uM8wumY.png"><p>Tea & Coffee</p></div>
+    <div class="category"><img src="https://i.imgur.com/9bBWcBN.png"><p>Snacks</p></div>
+    <div class="category"><img src="https://i.imgur.com/rI71o6F.png"><p>Soap</p></div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products" id="productList"></div>
+
+<!-- FOOTER -->
+<footer>
+    © 2025 Siyasharan Kirana Store, Nivi Rajasingh — All Rights Reserved.
+</footer>
+
+<script>
+// PRODUCT LIST
+const products = [
+    { name: "Aashirvaad Atta 5kg", price: "₹240", img: "https://i.imgur.com/E0Z5KqA.png" },
+    { name: "Fortune Oil 1L", price: "₹135", img: "https://i.imgur.com/VSFszTK.png" },
+    { name: "Tata Salt 1kg", price: "₹22", img: "https://i.imgur.com/UuYarPl.png" },
+    { name: "Colgate Toothpaste", price: "₹95", img: "https://i.imgur.com/JEOOc6k.png" },
+    { name: "Nescafe Coffee", price: "₹299", img: "https://i.imgur.com/4oGQwvP.png" },
+    { name: "Parle-G Biscuit", price: "₹10", img: "https://i.imgur.com/TzJvXwT.png" },
+    { name: "Red Label Tea", price: "₹145", img: "https://i.imgur.com/KH4FYsj.png" },
+    { name: "Detergent Surf Excel", price: "₹78", img: "https://i.imgur.com/lHkE8Tk.png" },
+    { name: "Chakki Fresh Atta 10kg", price: "₹430", img: "https://i.imgur.com/nRo4lb6.png" },
+    { name: "Basmati Rice 5kg", price: "₹540", img: "https://i.imgur.com/Ou7o5ST.png" },
+];
+
+// RENDER PRODUCTS
+function loadProducts() {
+    const list = document.getElementById("productList");
+    list.innerHTML = "";
+    products.forEach(p => {
+        list.innerHTML += `
+        <div class="product-card">
+            <img src="${p.img}">
+            <h4>${p.name}</h4>
+            <p>${p.price}</p>
+            <div class="add-btn">Add to Cart</div>
+        </div>`;
+    });
+}
+loadProducts();
+
+// SEARCH FEATURE
+document.getElementById("search").addEventListener("input", function() {
+    const keyword = this.value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(keyword));
+
+    const list = document.getElementById("productList");
+    list.innerHTML = "";
+    filtered.forEach(p => {
+        list.innerHTML += `
+        <div class="product-card">
+            <img src="${p.img}">
+            <h4>${p.name}</h4>
+            <p>${p.price}</p>
+            <div class="add-btn">Add to Cart</div>
+        </div>`;
+    });
+});
+</script>
+
+</body>
+</html>
